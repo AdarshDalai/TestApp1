@@ -13,16 +13,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+import androidx.compose.runtime.rememberCoroutineScope // Import rememberCoroutineScope
+import kotlinx.coroutines.launch // Import launch
 
 @Composable
 fun LoginScreen() {
-    
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var viewModel: LoginViewModel = viewModel()
     var alertBoxState by remember { mutableStateOf(false) }
-    
+    val scope = rememberCoroutineScope() // Create a coroutine scope
+
     Column {
         OutlinedTextField(
             value = email,
@@ -36,14 +38,18 @@ fun LoginScreen() {
             visualTransformation = PasswordVisualTransformation()
         )
         Button(onClick = {
-            viewModel.login(email, password)
-            alertBoxState = true
+            scope.launch { // Launch a coroutine
+                viewModel.login(email, password)
+                alertBoxState = true // Consider moving this based on login success
+            }
         }) {
             Text("Login")
         }
         Button(onClick = {
-            viewModel.signup(email, password)
-            alertBoxState = true
+            scope.launch { // Launch a coroutine
+                viewModel.signup(email, password)
+                alertBoxState = true // Consider moving this based on signup success
+            }
         }) {
             Text("Register")
         }
@@ -51,7 +57,7 @@ fun LoginScreen() {
     if (alertBoxState) {
         AlertBoxCustom(
             title = "Alert",
-            message = "Successfully logged in or registered",
+            message = "Successfully logged in or registered", // You might want to customize this message
             onDismiss = { alertBoxState = false }
         )
     }
