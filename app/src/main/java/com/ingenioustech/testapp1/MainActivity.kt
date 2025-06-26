@@ -78,9 +78,7 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        LoginScreen(
-
-                        )
+                        TaskScreen()
                     }
                 }
             }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -50,6 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,4 +78,7 @@ dependencies {
 
     //Ktor dependencies
     implementation("io.ktor:ktor-client-cio:3.2.0")
+
+    // Kotlin serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 }
