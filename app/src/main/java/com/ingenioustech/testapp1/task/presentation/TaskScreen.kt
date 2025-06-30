@@ -1,4 +1,4 @@
-package com.ingenioustech.testapp1
+package com.ingenioustech.testapp1.task.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,8 +24,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ingenioustech.testapp1.task.presentation.TaskViewModel
+import com.ingenioustech.testapp1.task.data.model.Task
 
 @Composable
 fun TaskScreen(
