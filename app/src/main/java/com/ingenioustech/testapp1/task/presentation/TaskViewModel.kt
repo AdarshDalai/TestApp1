@@ -1,15 +1,23 @@
-package com.ingenioustech.testapp1
+package com.ingenioustech.testapp1.task.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
+import com.ingenioustech.testapp1.task.data.model.Task
+import com.ingenioustech.testapp1.task.domain.repository.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-class TaskViewModel: ViewModel() {
-    private val repository = TaskRepository(FirebaseFirestore.getInstance())
+
+@HiltViewModel
+class TaskViewModel @Inject constructor(
+    private val repository: TaskRepository
+): ViewModel() {
+
     private val _tasks = MutableStateFlow<List<Task>>(emptyList())
     val tasks: StateFlow<List<Task>> = _tasks
 
@@ -31,7 +39,11 @@ class TaskViewModel: ViewModel() {
     fun addTask(title: String, description: String) {
         viewModelScope.launch {
             try {
-                val task = Task(id = UUID.randomUUID().toString(), title = title, description = description)
+                val task = Task(
+                    id = UUID.randomUUID().toString(),
+                    title = title,
+                    description = description
+                )
                 repository.addTask(task)
                 fetchTasks() // Refresh the task list
             } catch (e: Exception) {
@@ -65,3 +77,8 @@ class TaskViewModel: ViewModel() {
         }
     }
 }
+
+/*
+* Fetch tasks from sharedPreferences as well as firestore and log about the receiving points like
+* if it is already present in the shared preferences or not
+* or else if you are getting it from the firestore */
